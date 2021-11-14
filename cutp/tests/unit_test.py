@@ -1,5 +1,23 @@
 import pytest
-from cutp import parse_index, parse_pos
+from cutp import extract_chars, extract_fields, parse_index, parse_pos
+
+
+# --------------------------------------------------
+def test_extract_chars() -> None:
+    """ Test extract_chars """
+
+    assert extract_chars('', [0]) == ''
+    assert extract_chars('abc', [0]) == 'a'
+    assert extract_chars('abc', [2, 1, 3]) == 'cb'
+
+
+# --------------------------------------------------
+def test_extract_fields() -> None:
+    """ Test extract_fields """
+
+    assert extract_fields([], [0]) == []
+    assert extract_fields(['abc', 'def'], [0]) == ['abc']
+    assert extract_fields(['abc', 'def'], [1, 0, 2]) == ['def', 'abc']
 
 
 # --------------------------------------------------

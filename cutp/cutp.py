@@ -6,8 +6,9 @@ Purpose: Python cut clone
 """
 
 import argparse
+import csv
 import re
-from typing import List, NamedTuple, Optional, TextIO
+from typing import List, NamedTuple, TextIO
 
 
 class Args(NamedTuple):
@@ -91,7 +92,36 @@ def main() -> None:
     """ Make a jazz noise here """
 
     args = get_args()
-    print(args)
+
+    for fh in args.files:
+        if char_pos := args.char_pos:
+            for line in fh:
+                print(extract_chars(line, char_pos))
+        elif field_pos := args.field_pos:
+            reader = csv.reader(fh, delimiter=args.delimiter)
+            for rec in reader:
+                print(args.delimiter.join(extract_fields(rec, field_pos)))
+
+
+# --------------------------------------------------
+def extract_chars(text: str, pos: List[int]) -> str:
+    """ Extract characters from a string """
+
+    ln = len(text)
+    return ''.join(map(lambda i: text[i] if i < ln else '', pos))
+
+
+# --------------------------------------------------
+def extract_fields(rec: str, pos: List[int]) -> List[str]:
+    """ Extract fields from a delimited record """
+
+    fields = []
+    if length := len(rec):
+        for i in pos:
+            if i < length:
+                fields.append(rec[i])
+
+    return fields
 
 
 # --------------------------------------------------

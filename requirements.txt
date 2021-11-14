@@ -1,0 +1,12 @@
+black
+csvkit
+csvchk
+flake8
+mypy
+new-py
+pylint
+pytest
+pytest-flake8
+pytest-mypy
+pytest-pylint
+yapf
