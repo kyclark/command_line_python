@@ -9,6 +9,8 @@ import argparse
 import io
 import operator
 import sys
+import platform
+import os
 from typing import List, NamedTuple, TextIO
 
 
@@ -82,6 +84,8 @@ def get_args() -> Args:
 # --------------------------------------------------
 def main() -> None:
     """ Make a jazz noise here """
+    if platform.system() == 'Darwin':
+        os.system('say "jazz noise"')
 
     args = get_args()
 
